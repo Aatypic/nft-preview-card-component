@@ -1,0 +1,145 @@
+:root {
+  /* colors */
+  --clr-primary100: hsl(178, 100%, 50%);
+  --clr-primary400: hsl(215, 51%, 70%);
+  --clr-neutral100: hsl(0, 0%, 100%);
+  --clr-neutral400: hsl(215, 32%, 27%);
+  --clr-neutral500: hsl(216, 50%, 16%);
+  --clr-neutral600: hsl(217, 54%, 11%);
+
+  /* fonts */
+  --ff-primary: "Outfit", sans-serif;
+  --fweight-light: 300;
+  --fweight-regular: 400;
+  --fweight-sbold: 600;
+  --fsize400: 18px;
+}
+
+/* some resets css */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+
+  font-family: var(--ff-primary);
+  background-color: var(--clr-neutral600);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+}
+
+.card {
+  background: var(--clr-neutral500);
+  width: min(80vw, 20rem);
+  padding: 1.4rem;
+  border-radius: 1em;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.image__container {
+  position: relative;
+}
+img,
+.overlay {
+  border-radius: 0.65em;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.overlay {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: var(--clr-primary100);
+}
+.overlay:hover {
+  opacity: 0.5;
+}
+
+.overlay::after {
+  display: block;
+  background-image: url("images/icon-view.svg");
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+h1,
+div a {
+  color: var(--clr-neutral100);
+}
+h1:hover,
+div a:hover {
+  color: var(--clr-primary100);
+}
+
+h1 {
+  font-size: 1.475em;
+  font-weight: var(--fweight-sbold);
+  cursor: pointer;
+}
+
+p,
+.time,
+div {
+  color: var(--clr-primary400);
+  font-weight: var(--fweight-regular);
+}
+
+div:has(span) {
+  display: flex;
+  justify-content: space-between;
+}
+.value {
+  color: var(--clr-primary100);
+  font-weight: var(--fweight-sbold);
+}
+.value::before {
+  content: url("images/icon-ethereum.svg");
+}
+.time::before {
+  content: url("images/icon-clock.svg");
+}
+
+.attribution {
+  font-size: 11px;
+  text-align: center;
+}
+.attribution a {
+  color: hsl(228, 45%, 44%);
+}
