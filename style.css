@@ -12,7 +12,7 @@
   --fweight-light: 300;
   --fweight-regular: 400;
   --fweight-sbold: 600;
-  --fsize400: 18px;
+  --fsize400: 18px; /* not used from the design I think it's to big */
 }
 
 /* some resets css */
