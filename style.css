@@ -3,7 +3,7 @@
   --clr-primary100: hsl(178, 100%, 50%);
   --clr-primary400: hsl(215, 51%, 70%);
   --clr-neutral100: hsl(0, 0%, 100%);
-  --clr-neutral400: hsl(215, 32%, 27%);
+  --clr-neutral400: hwb(215 18% 64%);
   --clr-neutral500: hsl(216, 50%, 16%);
   --clr-neutral600: hsl(217, 54%, 11%);
 
@@ -36,9 +36,24 @@ dl,
 dd {
   margin: 0;
 }
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
   min-height: 100vh;
-  text-rendering: optimizeSpeed;
   line-height: 1.5;
 
   font-family: var(--ff-primary);
@@ -57,21 +72,19 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  box-shadow: 0px 0px 30px rgba(27, 27, 27, 0.7);
 }
-.image__container {
-  position: relative;
-}
-img,
-.overlay {
+.image__preview::before,
+img {
   border-radius: 0.65em;
 }
-img {
-  max-width: 100%;
-  display: block;
+.image__preview {
+  position: relative;
 }
 
-.overlay {
-  z-index: 10;
+/* light blue overlay background */
+.image__preview::before {
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -80,23 +93,32 @@ img {
   height: 100%;
   width: 100%;
   opacity: 0;
-  transition: 0.5s ease;
+  transform: scale(0.3, 0.3);
+  transition: transform 500ms ease-out;
   background-color: var(--clr-primary100);
 }
-.overlay:hover {
+
+.image__preview:hover::before {
   opacity: 0.5;
+  transform: scale(1, 1);
 }
 
-.overlay::after {
-  display: block;
-  background-image: url("images/icon-view.svg");
-
+/* the view icon */
+.image__preview::after {
+  content: url("images/icon-view.svg");
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  opacity: 0;
+}
+.image__preview:hover::after {
+  opacity: 1;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 h1,
@@ -114,17 +136,34 @@ h1 {
   cursor: pointer;
 }
 
-p,
-.time,
-div {
-  color: var(--clr-primary400);
-  font-weight: var(--fweight-regular);
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.25em;
+  }
 }
 
-div:has(span) {
+p,
+span {
+  color: var(--clr-primary400);
+}
+
+p {
+  font-weight: var(--fweight-light);
+}
+
+.infos {
   display: flex;
   justify-content: space-between;
+  padding-block-end: 1rem;
+  border-bottom: 1px solid var(--clr-neutral400);
+  font-size: 0.875em;
+  align-items: center;
 }
+.infos span {
+  display: flex;
+  align-items: center;
+}
+
 .value {
   color: var(--clr-primary100);
   font-weight: var(--fweight-sbold);
@@ -135,11 +174,41 @@ div:has(span) {
 .time::before {
   content: url("images/icon-clock.svg");
 }
+.value::before,
+.time::before {
+  padding-right: 0.3rem;
+  line-height: 0.875em;
+}
 
+.author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.author img {
+  width: 2em;
+  object-fit: cover;
+  border: 1.5px solid var(--clr-neutral100);
+  border-radius: 50%;
+}
+.author span {
+  font-weight: var(--fweight-light);
+}
+.author a {
+  text-decoration: none;
+}
+
+/* footer */
 .attribution {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  color: var(--clr-primary400);
   font-size: 11px;
   text-align: center;
 }
 .attribution a {
-  color: hsl(228, 45%, 44%);
+  color: hsl(0, 0%, 60%);
 }
