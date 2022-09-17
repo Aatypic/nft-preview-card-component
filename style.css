@@ -205,10 +205,8 @@ img {
 /* footer */
 .attribution {
   position: absolute;
-  bottom: 0;
-  left: 50%;
+  bottom: 1%;
   width: 100%;
-  transform: translateX(-50%);
   color: var(--clr-primary400);
   font-size: 11px;
   text-align: center;
